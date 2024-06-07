@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class FeedbackEmailRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        if(strtolower(session('role')) == "admin")
+            return true; 
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, mixed>
+     */
+    public function rules()
+    {
+        return [
+            'email_tos'      => [ 'required' ],
+            'email_tos.*'    => [ 'required','string'],
+            'email_ccs'      => [ 'nullable' ],
+            'email_ccs.*'    => [ 'nullable','string'],
+        ];
+    }
+}
